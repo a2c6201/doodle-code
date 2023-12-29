@@ -1,0 +1,3 @@
+#! /Users/fukunagaatsushi/.anyenv/envs/nodenv/shims/node
+
+console.log('hello')

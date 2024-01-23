@@ -1,0 +1,14 @@
+{
+  "scheme": "https",
+  "host": "app.tracks.run",
+  "orgName": "tutorial",
+  "examToken": "d9a18b1324154e08b8ba9a28dc3bd050",
+  "applicantExamId": 809602,
+  "challengeId": 651,
+  "challengeResultId": 1715983,
+  "cookies": {
+    "PLAY_SESSION": "eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7IlgtU0VTU0lPTklEIjoiN2M4ODUwMDgtZjVkMy00YmNhLWJkOTMtZDQxZTY5YzY4ZjU2In0sIm5iZiI6MTcwMzg5ODU1NywiaWF0IjoxNzAzODk4NTU3fQ.JCb2wQP4yxuWdyFsaD_-PQ0sv34TGBMzmKlYBPKdSAw",
+    "PLAY_LANG": "ja"
+  },
+  "programmingLanguage": 11
+}

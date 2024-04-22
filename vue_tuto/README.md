@@ -1,4 +1,5 @@
 # vue_tuto
+Vueの学習用
 
 ## Project setup
 ```

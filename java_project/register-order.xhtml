@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:jsf="http://xmlns.jcp.org/jsf"
+>
+  <h:head>
+    <title>仕入れ発注</title>
+    <!--
+	 ハイライトのための背景色
+	 -->
+    <style>
+      .selected {
+        background-color: yellow;
+      }
+    </style>
+  </h:head>
+  <body>
+    <header>
+      <h:form>
+        <h:commandButton
+          align="left"
+          action="#{loginBean.logout('login.xhtml')}"
+          value="ログアウト"
+        />
+        <h:commandButton value="食品登録画面" />
+      </h:form>
+    </header>
+    <h2>仕入れ発注</h2>
+
+    <h:form>
+      <h:panelGrid columns="2">
+        <label>発注者</label>
+        <h:inputTextarea
+          rows="1"
+          value="#{registerPurchaseOrderBean.purchaseOrderInputPerson}"
+        >
+        </h:inputTextarea>
+
+        <label>品目</label>
+        <h:selectOneMenu rows="1" value="#{registerPurchaseOrderBean.foodsId}">
+          <f:selectItem itemValue="1" itemLabel="カツオ" />
+          <f:selectItem itemValue="2" itemLabel="鶏肉" />
+          <f:selectItem itemValue="3" itemLabel="パイナップル" />
+        </h:selectOneMenu>
+
+        <h:form>
+          <h:inputText value="#{searchFoodListBean.foodName}">
+            <f:ajax
+              event="keyup"
+              execute="@this"
+              render="foodName"
+              listener="#{searchFoodListBean.getFoodList}"
+            />
+          </h:inputText>
+          <h:dataTable
+            id="foodName"
+            value="#{searchFoodListBean.getFoodList()}"
+            var="e"
+            border="1"
+          >
+            <h:column>
+              <h:commandButton
+                value="#{e.foodName}"
+                action="#{registerPurchaseOrderBean.selectFood(e.foodName)}"
+              >
+                <f:ajax execute="@this" render="selectedFoodName foodName" />
+              </h:commandButton>
+            </h:column>
+
+            <!-- 選択されたfoodNameの表示 -->
+          </h:dataTable>
+          <h:dataTable id="selectedFoodName">
+            <h:column>
+              <h:form>
+                <h:outputText
+                  value="Selected Food: #{registerPurchaseOrderBean.selectedFoodName}"
+                  styleClass="selected"
+                />
+              </h:form>
+            </h:column>
+          </h:dataTable>
+        </h:form>
+        <h:form id="searchForm">
+          <!-- テキスト入力フィールド -->
+          <h:inputText value="#{searchFoodListBean.foodName}">
+            <f:ajax
+              event="keyup"
+              execute="@this"
+              render="foodName"
+              listener="#{searchFoodListBean.getFoodList}"
+            />
+          </h:inputText>
+
+          <!-- データテーブル -->
+          <h:dataTable
+            id="foodName"
+            value="#{searchFoodListBean.getFoodList()}"
+            var="e"
+            border="1"
+          >
+            <h:column>
+              <h:form>
+                <!-- ボタン -->
+                <h:commandButton
+                  value="#{e.foodName}"
+                  action="#{registerPurchaseOrderBean.selectFood(e.foodName)}"
+                >
+                  <f:ajax execute="@this" render="selectedFoodName" />
+                </h:commandButton>
+              </h:form>
+            </h:column>
+          </h:dataTable>
+        </h:form>
+        <h:form>
+          <!-- 選択されたfoodNameの表示 -->
+          <h:panelGroup id="selectedFoodName">
+            <h:outputText
+              value="Selected Food: #{registerPurchaseOrderBean.selectedFoodName}"
+              styleClass="selected"
+            />
+          </h:panelGroup>
+        </h:form>
+
+        <label>サイズ</label>
+        <h:selectOneMenu rows="1" value="#{registerPurchaseOrderBean.sizeId}">
+          <f:selectItem itemValue="1" itemLabel="-" />
+          <f:selectItem itemValue="2" itemLabel="S" />
+          <f:selectItem itemValue="3" itemLabel="M" />
+          <f:selectItem itemValue="4" itemLabel="L" />
+          <f:selectItem itemValue="5" itemLabel="LL" />
+        </h:selectOneMenu>
+
+        <label>単位</label>
+        <h:selectOneMenu rows="1" value="#{registerPurchaseOrderBean.unitId}">
+          <f:selectItem itemValue="1" itemLabel="箱" />
+          <f:selectItem itemValue="2" itemLabel="セット" />
+          <f:selectItem itemValue="3" itemLabel="個数" />
+        </h:selectOneMenu>
+
+        <label>数量</label>
+        <h:inputTextarea rows="1" value="#{registerPurchaseOrderBean.pieces}">
+        </h:inputTextarea>
+        <label>産直</label>
+        <h:selectBooleanCheckbox
+          rows="1"
+          value="#{registerPurchaseOrderBean.fromFarm}"
+        >
+        </h:selectBooleanCheckbox>
+        <label>備考</label>
+        <h:inputTextarea rows="5" value="#{registerPurchaseOrderBean.notes}">
+        </h:inputTextarea>
+        <h:commandButton
+          value="追加"
+          action="#{registerPurchaseOrderBean.createOrder('register-order.xhtml')}"
+        >
+        </h:commandButton>
+      </h:panelGrid>
+    </h:form>
+
+    <!-- 発注書表示 -->
+  </body>
+</html>

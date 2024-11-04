@@ -1,7 +1,7 @@
-const example: string = "hello"
+const example: string = "hello";
 
 const hello = (name: string): string => {
-  return "hello, " + name
-}
+  return "hello, " + name;
+};
 
 console.log(hello("アツシ"));

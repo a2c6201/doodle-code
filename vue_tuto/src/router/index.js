@@ -1,7 +1,7 @@
 import { createMemoryHistory, createRouter } from "vue-router";
 
 import PostsView from "@/pages/PostsView";
-import News from "@/components/PostNews";
+import News from "@/pages/PostNews";
 import About from "@/components/PostAbout";
 
 const routes = [

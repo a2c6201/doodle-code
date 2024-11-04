@@ -1,5 +1,3 @@
-
-
 def main():
     s = input()
     return s

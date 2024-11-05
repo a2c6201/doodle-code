@@ -19,14 +19,6 @@ const buy = (itemName: string) => {
   alert('Are you sure to buy ' + itemName + '?')
 }
 
-const input = (event: any) => {
-  item1.name = event.target.value
-}
-
-const inputPrice = (event: any) => {
-  item1.price = event.target.value
-}
-
 const clear = () => {
   item1.name = ''
   item1.price = 0
@@ -37,8 +29,7 @@ const clear = () => {
   <div class="container">
     <h1>最近の支出</h1>
     <input v-model="item1.name" />
-    <!-- <input v-on:input="input" v-bind:value="item1.name" /> -->
-    <input v-on:input="inputPrice" v-bind:value="item1.price" />
+    <input v-model="item1.price" />
     <button v-on:click="clear">Clear</button>
     <div class="payment">
       <label>{{ item1.name }}</label>

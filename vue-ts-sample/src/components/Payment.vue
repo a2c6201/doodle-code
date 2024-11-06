@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed, toRef, toRefs, watch } from 'vue'
 
 // const itemName1 = ref<string>('Bike')
 const itemName2 = 'Desk'
 
+// オブジェクトをリアクティブな値にしたい場合、reactiveを使う
 const item1 = reactive({
   name: 'Desk',
   price: 40000,
 })
 
-// const price1 = 40000
-const price2 = 20000
+// 変数をリアクティブな値にしたい場合、refを使う
+// const price1 = ref(40000)
+const price2 = ref(20000)
 
 const url1 = 'https://www.amazon.co.jp/ref=nav_logo'
 const url2 = 'https://www.amazon.co.jp/ref=nav_logo'
@@ -23,6 +25,30 @@ const clear = () => {
   item1.name = ''
   item1.price = 0
 }
+
+const budget = 50000
+
+// リアクティブに処理を行ってほしいときはcomputedを設定する
+// computedを使わなくても実装はできる
+// だが使うことでvueの方でキャッシュしてくれたりして動作が軽くなる
+// 公式では使うことが推奨されている
+// const priceLabel = computed(() => {
+//   return item1.price <= 50000 ? item1.price + ' yen' : 'too expensive'
+// })
+
+const priceLabel = ref<string>(item1.price + 'yen')
+const { price } = toRefs(item1)
+// 第一引数に取った変数を監視し、変更があるたびに第2引数の関数を走らせる
+// 一般的にはcomputedで事足りる事が多い
+watch(price, () => {
+  if (budget * 2 < price.value) {
+    priceLabel.value = 'too expensive...'
+  } else if (budget < price.value) {
+    priceLabel.value = 'expensive'
+  } else {
+    priceLabel.value = price.value + 'yen'
+  }
+})
 </script>
 
 <template>
@@ -33,7 +59,7 @@ const clear = () => {
     <button v-on:click="clear">Clear</button>
     <div class="payment">
       <label>{{ item1.name }}</label>
-      <label>{{ item1.price }}</label>
+      <label>{{ priceLabel }}</label>
       <a v-bind:href="url1">bought at ...</a>
       <button v-on:click="buy(item1.name)">Buy</button>
     </div>
